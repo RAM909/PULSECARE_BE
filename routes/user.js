@@ -8,6 +8,7 @@ const { OTP } = require("../models/otpmodel"); // Import the OTP model
 const router = express.Router();
 const dotenv = require('dotenv');
 const { OAuth2Client } = require('google-auth-library');
+const {uploadImageToCloudinary} = require('../utils/imageUploader');
 
 dotenv.config();
 
@@ -148,6 +149,7 @@ router.post('/googlelogin', async (req, res) => {
 
             if (user) {
                 const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+                console.log("token generated:", token);
                 const { _id = _id, email = email1, firstname = firstname, lastname = lastname } = user;
                 return res.status(200).json({ token, user: { _id, email, firstname, lastname }, message: "Login Successfull" });
 
@@ -168,6 +170,7 @@ router.post('/googlelogin', async (req, res) => {
                 console.log("New user created:", newUser);
 
                 const token = jwt.sign({ _id: newUser._id }, process.env.JWT_SECRET);
+                console.log("token generated:", token);
                 const { _id, email, firstname, lastname } = newUser;
                 return res.status(200).json({ token, user: { _id, email, firstname, lastname }, message: "Login Successfull" });
             }
@@ -201,12 +204,15 @@ router.post("/login", async (req, res) => {
         }
 
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-        res.status(200).json({ token, user: { _id: user._id, email: user.email, firstname: user.firstname, lastname: user.lastname } });
+        console.log("token generated:", token);
+        res.status(200).json({ token, user: { _id: user._id, email: user.email, firstname: user.firstname, lastname: user.lastname, role:user.role } });
 
     } catch (error) {
         console.error("Error logging in user:", error);
         res.status(500).json({ message: "Internal server error" });
     }
 });
+
+
 
 module.exports = router;
