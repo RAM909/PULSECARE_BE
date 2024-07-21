@@ -8,7 +8,7 @@ const doctorReqSchema = new mongoose.Schema({
     },
     availableDays: {
         type: [String],
-        required: true
+        // required: true
     },
     certificate: {
         type: String,

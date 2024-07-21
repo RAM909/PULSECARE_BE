@@ -7,6 +7,8 @@ const user = require("./routes/user");
 const middleware = require("./middleware/middleware");
 const { cloudnairyconnect } = require("./config/cloudinary");
 const doctorReq = require("./routes/doctor");
+const appointment = require("./routes/appointment");
+
 
 dotenv.config();
 
@@ -28,6 +30,7 @@ cloudnairyconnect();
 app.use("/api/user/", user);
 app.use(middleware);
 app.use("/api/doctor/",doctorReq);
+app.use("/api/appointment/",appointment);
 
 
 app.listen(PORT, () => {

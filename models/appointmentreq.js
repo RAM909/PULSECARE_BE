@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-const appointmentSchema = new mongoose.Schema({
+const appointmentreqSchema = new mongoose.Schema({
     doctorId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "doctor",
+        ref: "user",
         required: true
     },
     patientId: {
@@ -21,7 +21,7 @@ const appointmentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["pending", "completed"],
+        enum: ["pending","accepted", "completed","cancelled"],
         default: "pending"
     },
     payment:{
@@ -29,8 +29,23 @@ const appointmentSchema = new mongoose.Schema({
         enum: ["paid", "unpaid"],
         default: "unpaid"
     },
+    description: {
+        type: String
+    },
+    phoneno: {
+        type: Number
+    },
+    patientemail: {
+        type: String
+    },
+    doctoremail: {
+        type: String
+    },
     prescription: {
         type: String
     }
 },
     { timstamp: true });
+
+    const appointmentreq = mongoose.model("appointmentreq", appointmentreqSchema);
+    module.exports = appointmentreq;
