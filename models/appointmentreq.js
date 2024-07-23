@@ -11,6 +11,9 @@ const appointmentreqSchema = new mongoose.Schema({
         ref: "user",
         required: true
     },
+    patientName:{
+        type : String,
+    },
     date: {
         type: Date,
         required: true
@@ -21,13 +24,20 @@ const appointmentreqSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["pending","accepted", "completed","cancelled"],
+        enum: ["pending", "accepted", "completed", "cancelled"],
         default: "pending"
     },
-    payment:{
+    payment: {
         type: String,
         enum: ["paid", "unpaid"],
         default: "unpaid"
+    },
+    cancelreason: {
+        type: String
+    },
+    cancelledBy: {
+        type: String,
+        enum: ["doctor", "patient"]
     },
     description: {
         type: String
@@ -35,6 +45,9 @@ const appointmentreqSchema = new mongoose.Schema({
     phoneno: {
         type: Number
     },
+    doctorname: {
+        type: String
+    },  
     patientemail: {
         type: String
     },
@@ -47,5 +60,5 @@ const appointmentreqSchema = new mongoose.Schema({
 },
     { timstamp: true });
 
-    const appointmentreq = mongoose.model("appointmentreq", appointmentreqSchema);
-    module.exports = appointmentreq;
+const Appointmentreq = mongoose.model("appointmentreq", appointmentreqSchema);
+module.exports = { Appointmentreq };
