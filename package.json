@@ -19,6 +19,7 @@
     "google-auth-library": "^9.11.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.3",
+    "nodemailer": "^6.9.14",
     "tmp": "^0.2.3"
   }
 }

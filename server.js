@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 // PORT
-const PORT = process.env.PORT || 3000; // Adding a default port for safety
+const PORT = process.env.PORT; // Adding a default port for safety
 
 // Connecting to database
 Connection();
