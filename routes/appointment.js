@@ -20,7 +20,9 @@ router.post("/book-appointment", async (req, res) => {
       phoneno: info.phone,
       patientemail: info.email,
       doctoremail: info.doctoremail,
-      doctorname: info.doctorname
+      doctorname: info.doctorname,
+      doctorphoto: info.doctorphoto,
+      patientphoto: info.patientphoto
     });
 
     await newreq.save();

@@ -59,7 +59,15 @@ const userSchema = new mongoose.Schema({
         // required: function() {
         //     return this.role === 'doctor';
         // }
-    }
+    },
+    photo:{
+        type:String
+    },
+    phoneno:{
+        type:Number
+        
+    },
+
 },
 { timestamps: true });
 

@@ -3,38 +3,49 @@ const router = express.Router();
 const { doctorReq } = require('../models/doctorreq');
 const { User } = require('../models/usermodel');
 const app = express();
+const cloudinary = require("cloudinary").v2;
+
+const opts = {
+  overwrite: true,
+  invalidate: true,
+  resource_type: "auto",
+};
 
 router.post("/apply-doctor", async (req, res) => {
   try {
-    const { info } = req.body;
+    const { userID, name, specialization, hospital, availableDays } = req.body;
+    console.log(name, specialization, hospital, availableDays);
     const certificateFile = req.files?.certificate;
-    console.log(info);
+    console.log(certificateFile);
 
     //   if (!certificateFile) {
     //     return res.status(400).json({ message: "Certificate file is required" });
     //   }
 
-    //   // Upload certificate to Cloudinary
-    //   const certificateUploadResult = await uploadImageToCloudinary(certificateFile.data, "certificates");
+    // Upload certificate to Cloudinary
+    // const certificateUploadResult = await uploadImageToCloudinary(certificateFile.data, "certificates");
+    const certificateUploadResult = await cloudinary.uploader.upload(certificateFile.tempFilePath);
+
+    console.log(certificateUploadResult);
 
     // Find the existing user and update the role and doctor's fields
-    console.log(info.userID)
-    const user = await User.findById(info.userID);
+    console.log(userID)
+    const user = await User.findById(userID);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const existingreq = await doctorReq.findOne({ userID: info.userID });
+    const existingreq = await doctorReq.findOne({ userID: userID });
     if (existingreq) {
       return res.status(400).json({ message: "Application already submitted" });
     }
 
     const newreq = new doctorReq({
-      specialization: info.specialization,
-      hospital: info.hospital,
-      availableDays: info.availableDays,
-      // certificate: info.certificate,
-      userID: info.userID,
+      specialization: specialization,
+      hospital: hospital,
+      availableDays: availableDays,
+      certificate: certificateUploadResult.secure_url,
+      userID: userID,
     });
 
     //   user.role = "doctor";

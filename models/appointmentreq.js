@@ -56,7 +56,14 @@ const appointmentreqSchema = new mongoose.Schema({
     },
     prescription: {
         type: String
+    },
+    doctorphoto: {
+        type: String
+    },
+    patientphoto: {
+        type: String
     }
+
 },
     { timstamp: true });
 
